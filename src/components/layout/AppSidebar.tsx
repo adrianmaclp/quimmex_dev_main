@@ -8,81 +8,43 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import {
-  LayoutDashboard,
-  Package,
-  ShoppingCart,
-  Users,
-  CreditCard,
-  FileBarChart,
-  Settings,
-} from "lucide-react";
+import { menu } from "@/routes/menu";
 
-const items = [
-  {
-    title: "Dashboard",
-    url: "/",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Inventario",
-    url: "/inventario",
-    icon: Package,
-  },
-  {
-    title: "Ventas",
-    url: "/ventas",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Clientes",
-    url: "/clientes",
-    icon: Users,
-  },
-  {
-    title: "Cobranza",
-    url: "/cobranza",
-    icon: CreditCard,
-  },
-  {
-    title: "Reportes",
-    url: "/reportes",
-    icon: FileBarChart,
-  },
-  {
-    title: "Configuración",
-    url: "/configuracion",
-    icon: Settings,
-  },
-];
+import { NavLink, useLocation } from "react-router-dom";
 
 export default function AppSidebar() {
-  return (
-    <Sidebar>
+  const location = useLocation();
 
-      <SidebarHeader className="p-4">
-        <h2 className="text-lg font-bold">
+  const isMenuActive = (path: string) =>
+    location.pathname === path ||
+    location.pathname.startsWith(path + "/");
+
+  return (
+    <Sidebar className="border-r border-slate-200 bg-white shadow-sm">
+
+      {/* Logo */}
+      <SidebarHeader className="px-6 py-6">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-800">
           Quimmex
         </h2>
       </SidebarHeader>
 
-      <SidebarContent>
+      {/* Menú */}
+      <SidebarContent className="px-3">
 
-        <SidebarMenu>
+        <SidebarMenu className="mt-3 space-y-2">
 
-          {items.map((item) => (
+          {menu.map((item) => (
             <SidebarMenuItem key={item.title}>
 
-              <SidebarMenuButton asChild>
-
-                <a href={item.url}>
-
+              <SidebarMenuButton
+                asChild
+                isActive={isMenuActive(item.path)}
+              >
+                <NavLink to={item.path}>
                   <item.icon />
-
                   <span>{item.title}</span>
-
-                </a>
-
+                </NavLink>
               </SidebarMenuButton>
 
             </SidebarMenuItem>
@@ -92,8 +54,9 @@ export default function AppSidebar() {
 
       </SidebarContent>
 
-      <SidebarFooter className="p-4 text-sm text-muted-foreground">
-        v1.0.0
+      {/* Footer */}
+      <SidebarFooter className="border-t border-slate-200 px-6 py-5 text-xs text-slate-500">
+        Quimmex ERP · v1.0.0
       </SidebarFooter>
 
     </Sidebar>

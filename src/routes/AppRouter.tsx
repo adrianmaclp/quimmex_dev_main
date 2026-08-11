@@ -1,24 +1,34 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import MainLayout from "@/layouts/MainLayout";
+
 import DashboardPage from "@/pages/Dashboard/DashboardPage";
+import ClientesPage from "@/pages/Clientes/Clientes";
 import LoginPage from "@/pages/Login/LoginPage";
 import NotFoundPage from "@/pages/NotFound/NotFoundPage";
 
+
+import { appRoutes } from "./app.routes";
+
+
 export default function AppRouter() {
+
   return (
     <BrowserRouter>
-        <Routes>
+      <Routes>
 
-            <Route path="/login" element={<LoginPage />} />
+        {/* Rutas públicas */}
+        <Route path="/login" element={<LoginPage />} />
 
-            <Route element={<MainLayout />}>
-            <Route index element={<DashboardPage />} />
-            </Route>
+        {/* Rutas con Layout */}
+         <Route element={<MainLayout />}>
+          {appRoutes}
+        </Route>
 
-            <Route path="*" element={<NotFoundPage />} />
+        {/* 404 */}
+        <Route path="*" element={<NotFoundPage />} />
 
-        </Routes>
+      </Routes>
     </BrowserRouter>
   );
 }
